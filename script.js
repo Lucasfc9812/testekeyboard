@@ -561,5 +561,130 @@ function applyLightingEffects() {
     }
 }
 
+// --- Test Area Logic ---
+
+function setupTestArea() {
+    const testArea = document.getElementById('testArea');
+    const clearBtn = document.getElementById('clearTest');
+
+    if (!testArea) return;
+
+    clearBtn.addEventListener('click', () => {
+        testArea.value = '';
+        testArea.focus();
+    });
+
+    testArea.addEventListener('keydown', (e) => {
+        // Prevent default only if we are remapping
+        const profile = getCurrentProfile();
+        const code = e.code; // 'KeyA', 'KeyC', etc.
+
+        // Visual feedback on virtual keyboard
+        visualizeKeyPress(code);
+
+        if (profile.keymap[code]) {
+            e.preventDefault();
+            const mapping = profile.keymap[code];
+
+            if (mapping.type === 'key') {
+                // Insert the remapped character
+                // Note: This is a simple simulation. 
+                // Characters like 'Enter' or 'Backspace' need special handling for a textarea simulation,
+                // but for simple char-to-char mapping (C -> W) logic is:
+
+                let charToInsert = mapping.value;
+
+                // Handle special key names if they are in the mapping value (e.g. "Enter")
+                // Our generic select values are single chars "A", "B" or words "ENTER".
+                // If it is a single char, just insert.
+
+                if (charToInsert.length === 1) {
+                    // Check caps lock or shift state from original event? 
+                    // For simplicity, we just insert the value from our map (usually uppercase in config)
+                    // If we want lower case, we'd need to check shiftKey.
+                    if (!e.shiftKey && !e.getModifierState("CapsLock")) {
+                        charToInsert = charToInsert.toLowerCase();
+                    }
+                    insertAtCursor(testArea, charToInsert);
+                } else {
+                    // Handle special keys simulation
+                    handleSpecialKeySimulation(testArea, charToInsert);
+                }
+
+                // Visual feedback for the RESULTANT key
+                // Convert char back to code? It's hard without a map.
+                // We'll just light up the remapped key if we can find it.
+                const targetCode = findCodeByLabel(mapping.value);
+                if (targetCode) visualizeKeyPress(targetCode);
+            }
+        }
+    });
+
+    testArea.addEventListener('keyup', (e) => {
+        const code = e.code;
+        // Turn off visual usage
+        const keyEl = document.querySelector(`.key[data-code="${code}"]`);
+        if (keyEl) {
+            keyEl.style.transform = 'none';
+            keyEl.style.boxShadow = 'none'; // Revert to default or active profile style
+
+            // Quick fix: re-apply profile style
+            renderKeyboard();
+        }
+    });
+}
+
+function insertAtCursor(myField, myValue) {
+    //IE support
+    if (document.selection) {
+        myField.focus();
+        sel = document.selection.createRange();
+        sel.text = myValue;
+    }
+    //MOZILLA and others
+    else if (myField.selectionStart || myField.selectionStart == '0') {
+        var startPos = myField.selectionStart;
+        var endPos = myField.selectionEnd;
+        myField.value = myField.value.substring(0, startPos)
+            + myValue
+            + myField.value.substring(endPos, myField.value.length);
+        myField.selectionStart = startPos + myValue.length;
+        myField.selectionEnd = startPos + myValue.length;
+    } else {
+        myField.value += myValue;
+    }
+}
+
+function handleSpecialKeySimulation(field, keyName) {
+    // Basic simulation for demo purposes
+    if (keyName === 'SPACE') insertAtCursor(field, ' ');
+    if (keyName === 'ENTER') insertAtCursor(field, '\n');
+    // Add more if needed
+}
+
+function visualizeKeyPress(code) {
+    const keyEl = document.querySelector(`.key[data-code="${code}"]`);
+    if (keyEl) {
+        keyEl.style.transform = 'translateY(2px)';
+        keyEl.style.boxShadow = `0 0 15px var(--accent-primary)`;
+        keyEl.style.borderColor = 'var(--text-primary)';
+    }
+}
+
+function findCodeByLabel(label) {
+    // Reverse lookup for visualization
+    // Very inefficient but fine for this scale
+    for (let row of keyboardLayout) {
+        for (let key of row) {
+            if (key.label.toUpperCase() === label.toUpperCase()) return key.code;
+            if (key.code.toUpperCase() === ('KEY' + label).toUpperCase()) return key.code;
+        }
+    }
+    return null;
+}
+
 // Start app
-document.addEventListener('DOMContentLoaded', init);
+document.addEventListener('DOMContentLoaded', () => {
+    init();
+    setupTestArea();
+});
