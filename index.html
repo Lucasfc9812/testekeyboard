@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIERCE GAMING GEAR - Keyboard Configurator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="dark-mode">
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                    <rect width="32" height="32" rx="6" fill="#E0230E" />
+                    <path d="M8 10h16v3H8zM8 16h10v3H8zM8 22h16v3H8z" fill="white" />
+                </svg>
+                <span class="logo-text">FIERCE GAMING GEAR</span>
+            </div>
+            <div class="header-actions">
+                <button class="theme-toggle" id="themeToggle" title="Toggle Dark/Light Mode">
+                    <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <circle cx="12" cy="12" r="5" />
+                        <line x1="12" y1="1" x2="12" y2="3" />
+                        <line x1="12" y1="21" x2="12" y2="23" />
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                        <line x1="1" y1="12" x2="3" y2="12" />
+                        <line x1="21" y1="12" x2="23" y2="12" />
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                    </svg>
+                    <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <nav class="nav-menu">
+                <button class="nav-item active" data-panel="lighting">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                    </svg>
+                    <span>RGB Lighting</span>
+                </button>
+                <button class="nav-item" data-panel="performance">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z" />
+                    </svg>
+                    <span>Performance</span>
+                </button>
+                <button class="nav-item" data-panel="keymapping">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <rect x="3" y="3" width="18" height="18" rx="2" />
+                        <path d="M7 7h10M7 12h10M7 17h6" stroke="white" stroke-width="1.5" />
+                    </svg>
+                    <span>Key Mapping</span>
+                </button>
+                <button class="nav-item" data-panel="macros">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="M12 6v6l4 2" stroke="white" stroke-width="2" />
+                    </svg>
+                    <span>Macros</span>
+                </button>
+                <button class="nav-item" data-panel="profiles">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" />
+                        <polyline points="17 21 17 13 7 13 7 21" fill="none" stroke="white" stroke-width="2" />
+                    </svg>
+                    <span>Profiles</span>
+                </button>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="content">
+            <!-- Keyboard Visualization -->
+            <section class="keyboard-section">
+                <div class="keyboard-container">
+                    <div class="keyboard" id="keyboard"></div>
+                </div>
+            </section>
+
+            <!-- Configuration Panels -->
+            <section class="config-panels">
+                <!-- RGB Lighting Panel -->
+                <div class="panel active" id="panel-lighting">
+                    <h2 class="panel-title">RGB Lighting Configuration</h2>
+
+                    <div class="config-group">
+                        <h3>Lighting Effects</h3>
+                        <div class="effect-grid">
+                            <button class="effect-btn active" data-effect="solid">Solid Color</button>
+                            <button class="effect-btn" data-effect="breathing">Breathing</button>
+                            <button class="effect-btn" data-effect="rainbow">Rainbow Wave</button>
+                            <button class="effect-btn" data-effect="zone">Zone Split</button>
+                            <button class="effect-btn" data-effect="random">Random Keys</button>
+                            <button class="effect-btn" data-effect="pulse">Pulse Sync</button>
+                        </div>
+                    </div>
+
+                    <div class="config-group">
+                        <h3>Color Selection</h3>
+                        <div class="color-picker-container">
+                            <input type="color" id="colorPicker" value="#E0230E">
+                            <label for="colorPicker">Primary Color</label>
+                        </div>
+                    </div>
+
+                    <div class="config-group">
+                        <h3>Brightness</h3>
+                        <div class="slider-container">
+                            <input type="range" id="brightness" min="0" max="100" value="100">
+                            <span class="slider-value" id="brightnessValue">100%</span>
+                        </div>
+                    </div>
+
+                    <div class="config-group">
+                        <h3>Effect Speed</h3>
+                        <div class="slider-container">
+                            <input type="range" id="effectSpeed" min="1" max="10" value="5">
+                            <span class="slider-value" id="speedValue">5</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Performance Panel -->
+                <div class="panel" id="panel-performance">
+                    <h2 class="panel-title">Performance Settings</h2>
+
+                    <div class="config-group">
+                        <h3>Polling Rate</h3>
+                        <div class="polling-grid">
+                            <button class="polling-btn" data-rate="125">125 Hz</button>
+                            <button class="polling-btn" data-rate="250">250 Hz</button>
+                            <button class="polling-btn" data-rate="500">500 Hz</button>
+                            <button class="polling-btn active" data-rate="1000">1000 Hz</button>
+                            <button class="polling-btn" data-rate="2000">2000 Hz</button>
+                            <button class="polling-btn" data-rate="4000">4000 Hz</button>
+                            <button class="polling-btn" data-rate="8000">8000 Hz</button>
+                        </div>
+                        <div class="info-box">
+                            <p>Response Time: <strong id="responseTime">1.0ms</strong></p>
+                        </div>
+                    </div>
+
+                    <div class="config-group">
+                        <h3>Actuation Point</h3>
+                        <div class="slider-container">
+                            <input type="range" id="actuationPoint" min="0.1" max="4.0" step="0.1" value="2.0">
+                            <span class="slider-value" id="actuationValue">2.0mm</span>
+                        </div>
+                        <p class="help-text">Adjust the distance required to register a keypress</p>
+                    </div>
+
+                    <div class="config-group">
+                        <h3>Rapid Trigger</h3>
+                        <div class="toggle-container">
+                            <label class="toggle">
+                                <input type="checkbox" id="rapidTrigger">
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <span>Enable Rapid Trigger</span>
+                        </div>
+                        <div class="slider-container" id="rapidTriggerSettings" style="display: none;">
+                            <label>Sensitivity</label>
+                            <input type="range" id="rapidTriggerSensitivity" min="0.04" max="1.0" step="0.04"
+                                value="0.2">
+                            <span class="slider-value" id="rapidSensitivityValue">0.20mm</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Key Mapping Panel -->
+                <div class="panel" id="panel-keymapping">
+                    <h2 class="panel-title">Key Mapping</h2>
+
+                    <div class="config-group">
+                        <div class="info-box">
+                            <p>Click on any key in the keyboard above to remap it</p>
+                        </div>
+
+                        <div id="remapInterface" class="remap-interface" style="display: none;">
+                            <h3>Remapping: <span id="currentKey"></span></h3>
+                            <div class="key-options">
+                                <select id="keySelect" class="key-select">
+                                    <option value="">Select new key...</option>
+                                    <optgroup label="Letters">
+                                        <option value="A">A</option>
+                                        <option value="B">B</option>
+                                        <option value="C">C</option>
+                                        <option value="D">D</option>
+                                        <option value="E">E</option>
+                                        <option value="F">F</option>
+                                        <option value="G">G</option>
+                                        <option value="H">H</option>
+                                        <option value="I">I</option>
+                                        <option value="J">J</option>
+                                        <option value="K">K</option>
+                                        <option value="L">L</option>
+                                        <option value="M">M</option>
+                                        <option value="N">N</option>
+                                        <option value="O">O</option>
+                                        <option value="P">P</option>
+                                        <option value="Q">Q</option>
+                                        <option value="R">R</option>
+                                        <option value="S">S</option>
+                                        <option value="T">T</option>
+                                        <option value="U">U</option>
+                                        <option value="V">V</option>
+                                        <option value="W">W</option>
+                                        <option value="X">X</option>
+                                        <option value="Y">Y</option>
+                                        <option value="Z">Z</option>
+                                    </optgroup>
+                                    <optgroup label="Numbers">
+                                        <option value="0">0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                    </optgroup>
+                                    <optgroup label="Function Keys">
+                                        <option value="F1">F1</option>
+                                        <option value="F2">F2</option>
+                                        <option value="F3">F3</option>
+                                        <option value="F4">F4</option>
+                                        <option value="F5">F5</option>
+                                        <option value="F6">F6</option>
+                                        <option value="F7">F7</option>
+                                        <option value="F8">F8</option>
+                                        <option value="F9">F9</option>
+                                        <option value="F10">F10</option>
+                                        <option value="F11">F11</option>
+                                        <option value="F12">F12</option>
+                                    </optgroup>
+                                    <optgroup label="Media Keys">
+                                        <option value="PLAY">Play/Pause</option>
+                                        <option value="STOP">Stop</option>
+                                        <option value="PREV">Previous</option>
+                                        <option value="NEXT">Next</option>
+                                        <option value="MUTE">Mute</option>
+                                        <option value="VOL_UP">Volume Up</option>
+                                        <option value="VOL_DOWN">Volume Down</option>
+                                    </optgroup>
+                                </select>
+                                <button class="btn-primary" id="applyRemap">Apply</button>
+                                <button class="btn-secondary" id="cancelRemap">Cancel</button>
+                                <button class="btn-danger" id="resetKey">Reset to Default</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Macros Panel -->
+                <div class="panel" id="panel-macros">
+                    <h2 class="panel-title">Macro Management</h2>
+
+                    <div class="config-group">
+                        <button class="btn-primary" id="createMacro">+ Create New Macro</button>
+
+                        <div id="macroList" class="macro-list">
+                            <!-- Macros will be dynamically added here -->
+                        </div>
+
+                        <div id="macroEditor" class="macro-editor" style="display: none;">
+                            <h3>Macro Editor</h3>
+                            <div class="form-group">
+                                <label>Macro Name</label>
+                                <input type="text" id="macroName" placeholder="Enter macro name">
+                            </div>
+                            <div class="form-group">
+                                <label>Key Sequence</label>
+                                <textarea id="macroSequence"
+                                    placeholder="Enter keys separated by commas (e.g., Ctrl, C, Ctrl, V)"
+                                    rows="3"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Delay Between Keys (ms)</label>
+                                <input type="number" id="macroDelay" value="50" min="0" max="1000">
+                            </div>
+                            <div class="button-group">
+                                <button class="btn-primary" id="saveMacro">Save Macro</button>
+                                <button class="btn-secondary" id="cancelMacro">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profiles Panel -->
+                <div class="panel" id="panel-profiles">
+                    <h2 class="panel-title">Profile Management</h2>
+
+                    <div class="config-group">
+                        <h3>Current Profile</h3>
+                        <div class="profile-current">
+                            <input type="text" id="profileName" placeholder="Profile Name" value="Default">
+                            <button class="btn-primary" id="saveProfile">Save Profile</button>
+                        </div>
+                    </div>
+
+                    <div class="config-group">
+                        <h3>Saved Profiles</h3>
+                        <div id="profileList" class="profile-list">
+                            <!-- Profiles will be dynamically added here -->
+                        </div>
+                    </div>
+
+                    <div class="config-group">
+                        <h3>Import/Export</h3>
+                        <div class="button-group">
+                            <button class="btn-secondary" id="exportProfile">Export as JSON</button>
+                            <label class="btn-secondary file-upload">
+                                Import JSON
+                                <input type="file" id="importProfile" accept=".json" style="display: none;">
+                            </label>
+                            <button class="btn-danger" id="resetToDefault">Reset to Default</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Test Area -->
+            <section class="test-section" style="margin-top: 32px;">
+                <div class="panel active"> <!-- Always visible or togglable -->
+                    <h2 class="panel-title">Test Your Keyboard</h2>
+                    <div class="test-container">
+                        <textarea id="testArea"
+                            placeholder="Type here to test your remappings... (Focus here first)"></textarea>
+                        <div class="test-info">
+                            <p>Active Layout: <span id="activeLayoutName">Default</span></p>
+                            <p style="color: yellow; font-family: monospace;">Debug: <span
+                                    id="debugInfo">Waiting...</span></p>
+                            <button id="clearTest" class="btn-secondary">Clear</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
